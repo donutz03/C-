@@ -1,0 +1,75 @@
+#include <bits/stdc++.h>
+
+std :: ifstream in ("C:\\Users\\Lenovo\\CLionProjects\\untitled\\cifre4.in");
+
+std :: ofstream out ("C:\\Users\\Lenovo\\CLionProjects\\untitled\\cifre4.out");
+
+const int DIM = 5e6 + 5;
+
+
+const int v[] = {2,3,5,7};
+
+int t;
+
+int n;
+
+int p;
+
+
+std :: queue <long long> q;
+
+std :: bitset <DIM> visited;
+
+long long bfs()
+{
+    while(!q.empty())
+    {
+        q.pop();
+    }
+
+    for(int i = 0; i <= p; i ++)
+    {
+        visited[i]=false;
+    }
+
+    for(int i = 0; i < 4; i ++)
+    {
+        q.push(v[i]);
+    }
+    while(!q.empty())
+    {
+        long long nr = q.front();
+
+        q.pop();
+
+        if (visited[nr%p] == false)
+        {
+            visited[nr%p] = true;
+
+            if(nr % p == n)
+            {
+                return 1ll * nr;
+            }
+            for(int i = 0; i < 4; i ++)
+            {
+                q.push(nr * 10 + v[i]);
+            }
+        }
+    }
+
+    return 1ll * -1;
+}
+int main()
+{
+    in >> t;
+    while(t --)
+    {
+        in >> n >> p;
+        out << bfs() << '\n';
+    }
+    if (!in.is_open() || !out.is_open()) {
+       std:: cerr << "Error opening file(s)." <<std:: endl;
+    //std::cout<<"a";
+    }
+    return 0;
+}
