@@ -1,0 +1,1 @@
+for s in[*open(0)][1:]:l,r,k=map(int,s.split());print((pow(d:=9//k+1,r,M:=10**9+7)-pow(d,l,M))%M)
