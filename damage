@@ -1,0 +1,27 @@
+class Solution {
+public:
+    long long minDamage(int power, vector<int>& damage, vector<int>& health) {
+        int numEnemies = damage.size();
+        long long totalDamagePerSecond = accumulate(damage.begin(), damage.end(), 0LL);
+
+        vector<pair<double, int>> efficiencyList;
+        for (int i = 0; i < numEnemies; i++) {
+            int attackTime = (health[i] + power - 1) / power;
+            efficiencyList.push_back({(double)damage[i] / attackTime, i});
+        }
+        sort(efficiencyList.rbegin(), efficiencyList.rend());
+
+        long long totalDamage = 0;
+
+        for (int i = 0; i < numEnemies; i++) {
+            double currentEfficiency = efficiencyList[i].first;
+            int enemyIndex = efficiencyList[i].second;
+
+            int timeToKill = (health[enemyIndex] + power - 1) / power;
+            totalDamage += 1LL * totalDamagePerSecond * timeToKill;
+            totalDamagePerSecond -= damage[enemyIndex];
+        }
+
+        return totalDamage;
+    }
+};
